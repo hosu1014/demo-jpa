@@ -20,16 +20,20 @@ public class MemberController {
 	@Autowired
 	private MemberRepository memberRepository;
 	
-	@RequestMapping("{memberId}")
-	public String viewMember(@PathVariable String memberId, Model model) {
+	@RequestMapping("{memberId}/search.do")
+	public String viewMember(@PathVariable String memberId, Model model) throws Exception {
 		
 		memberRepository.save(new Member("your name", 24));
 		
 		logger.info(String.format("Parameber member id : [%s]", memberId));
 		Member member = memberRepository.findOne(memberId);
 		
-		logger.info(member.toString());
-		model.addAttribute("member", member);
+		if(member != null) {
+			logger.info(member.toString());
+			model.addAttribute("member", member);
+		} else {
+			throw new Exception("No Data");
+		}
 		return "member/viewMember";
 	}
 }
