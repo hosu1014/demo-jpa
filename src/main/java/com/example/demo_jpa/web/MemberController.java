@@ -1,5 +1,7 @@
 package com.example.demo_jpa.web;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,4 +38,14 @@ public class MemberController {
 		}
 		return "member/viewMember";
 	}
+	
+	@RequestMapping("listMember.do")
+	public String listMember(Model model) throws Exception {
+		List<Member> memberList = memberRepository.findAll();
+		
+		model.addAttribute("memberList", memberList);
+		return "member/memberList";
+	}
+	
+	
 }
